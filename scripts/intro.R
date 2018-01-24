@@ -243,9 +243,21 @@ abline(model, col="red", lty=2)
 install.packages(ggplot2) #install the ggplot package
 require(ggplot2)
 
-emotion<-read.csv("https://raw.githubusercontent.com/Neilblund/729A/master/data/protest_events.csv") #read a csv from github
-emotion$date<-as.Date(emotion$date)
-
+#read some data from github
+emo_prot<-read.csv("https://raw.githubusercontent.com/Neilblund/GW_course/master/data/emotion_protest.csv", row.names = "X")
 
 #create separate line plots for each emotion over time
-ggplot(data=emotion, aes(date, value)) + geom_line() +  scale_x_date() + xlab("") + ylab("% of articles")  + facet_wrap(~variable)
+ggplot(data=emo_prot, aes(as.Date(date), value)) + geom_line() +  scale_x_date() + xlab("") + ylab("% of articles")  + facet_wrap(~variable)
+
+
+
+
+#plot the relationship between logged protest events and emotion
+plot<-ggplot(data=emo_prot, aes(value, nprotest)) + 
+  geom_point() +  
+  xlab("% of articles") + 
+  ylab("Number of protests") +
+  geom_smooth(method="lm",size=1.0)
+plot
+
+plot +  facet_wrap(~variable) 
