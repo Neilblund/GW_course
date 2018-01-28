@@ -240,24 +240,36 @@ abline(model, col="red", lty=2)
 #Installing packages, loading libraries, reading external data----
 
 
-install.packages(ggplot2) #install the ggplot package
-require(ggplot2)
 
-#read some data from github
-emo_prot<-read.csv("https://raw.githubusercontent.com/Neilblund/GW_course/master/data/emotion_protest.csv", row.names = "X")
+if(!require(ggplot2)){ 
+  install.packages(ggplot2) #install the ggplot package if it is not already installed
+  
+}
+
+
+
+emo_prot<-read.csv("https://raw.githubusercontent.com/Neilblund/GW_course/master/data/emo_protest.csv", row.names = "X")
 
 #create separate line plots for each emotion over time
-ggplot(data=emo_prot, aes(as.Date(date), value)) + geom_line() +  scale_x_date() + xlab("") + ylab("% of articles")  + facet_wrap(~variable)
+ggplot(data=emo_prot, aes(as.Date(date), value))+
+  geom_line() +  
+  scale_x_date() +
+  xlab("") +
+  ylab("% of articles")  +
+  facet_wrap(~emotion)
+
 
 
 
 
 #plot the relationship between logged protest events and emotion
-plot<-ggplot(data=emo_prot, aes(value, nprotest)) + 
+emotion_plot<-ggplot(data=emo_prot, aes(value, protests)) + 
   geom_point() +  
-  xlab("% of articles") + 
+  xlab("") + 
   ylab("Number of protests") +
-  geom_smooth(method="lm",size=1.0)
-plot
+  geom_smooth(method="lm",size=1.0, se=FALSE)+
+  theme_bw()
+emotion_plot
 
-plot +  facet_wrap(~variable) 
+
+emotion_plot +  facet_wrap(~emotion) 
