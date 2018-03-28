@@ -38,9 +38,10 @@ bootDyx<-function(y, x, n=1000, level=.975, seed=100, full=FALSE){
 
   
   if(full==FALSE){
-    bound<-sd(boots) * qnorm(level)
+    sd<-sd(boots)
+    bound<- sd * qnorm(level)
     mean<-mean(boots)
-    boots<-c("lower.bound"=mean-(bound), "mean"=mean, "upper.bound"=mean+bound)
+    boots<-c("mean"=mean, "sd"=sd(boots), "p"=pnorm(mean/sd) ,"lower.bound"=mean-(bound),  "upper.bound"=mean+bound)
     
   }
   
