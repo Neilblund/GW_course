@@ -29,7 +29,7 @@ bootDyx<-function(y, x, n=1000, level=.975, seed=100, full=FALSE){
  
   for(i in 1:n){
     ind<-sample(length(y), replace=T)
-    boots[i]<-somersD(table(x[ind], y[ind]))
+    boots[i]<-somersD(y[ind], x[ind])
     
   }
 
