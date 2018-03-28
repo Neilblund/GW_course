@@ -22,8 +22,11 @@ somersD<-function(y, x){
 
 #bootstrapping for CIs
 bootDyx<-function(y, x, n=1000, level=.975, seed=100, full=FALSE){
-  set.seed(100)
-
+  set.seed(seed)
+  
+  complete<-complete.cases(cbind(y,x))
+  y<-y[complete]
+  x<-x[complete]
     
   boots<-vector("numeric", length=n)
  
